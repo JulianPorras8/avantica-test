@@ -5,7 +5,7 @@ import { queryGetFacebookIssues } from './queries';
 
 const mapGithubResult = (result: IGithubResultType): IIssue[] => {
   return map(result.repository.issues.edges, (item) => {
-    const issue = item.node
+    const issue = item.node;
     return {
       ...issue,
       labels: map(item.node.labels.edges, (labelItem) => labelItem.node),

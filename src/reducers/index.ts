@@ -1,13 +1,13 @@
-import { History } from "history";
-import { combineReducers } from "redux";
-import { Todo } from "../model";
-import * as todoReducer from "./issue";
+import { History } from 'history';
+import { combineReducers } from 'redux';
+import { Todo } from '../model';
+import * as todoReducer from './issue';
 
 export interface RootState {
-	todoList: Todo[];
+  todoList: Todo[];
 }
 
 export default (history: History) =>
-	combineReducers({
-		...todoReducer,
-	});
+  combineReducers({
+    ...todoReducer,
+  });
