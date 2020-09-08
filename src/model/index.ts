@@ -1,6 +1,6 @@
-import { TodoAction } from './todo';
+import { TodoAction } from './issue';
 
-export * from './todo';
+export * from './issue';
 
 export type Action =
     | TodoAction

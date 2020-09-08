@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/styles";
 import * as React from "react";
 import { useSelector } from "react-redux";
 import { useActions } from "../actions";
-import * as TodoActions from "../actions/todo";
+import * as TodoActions from "../actions/issue";
 import { Todo } from "../model";
 import { RootState } from "../reducers";
 

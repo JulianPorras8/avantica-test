@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { Route, Router } from "react-router-dom";
 import { history } from "./configureStore";
 import { Todo } from "./model";
-import { HomePage, TodoPage } from "./pages";
+import { HomePage, IssuesPage } from "./pages";
 import { RootState } from "./reducers/index";
 import { withRoot } from "./withRoot";
 
@@ -21,7 +21,7 @@ function Routes() {
 		<div className={classes.content}>
 			<Route exact={true} path="/" component={HomePage} />
 			<Route exact={true} path="/home" component={HomePage} />
-			<Route exact={true} path="/todo" component={TodoPage} />
+			<Route exact={true} path="/issues" component={IssuesPage} />
 		</div>
 	);
 }
@@ -43,11 +43,11 @@ function Drawer(props: { todoList: Todo[] }) {
 			</List>
 			<Divider />
 			<List>
-				<ListItem button onClick={() => history.push("/todo")}>
+				<ListItem button onClick={() => history.push("/issues")}>
 					<ListItemIcon>
 						<TodoIcon todoList={props.todoList} />
 					</ListItemIcon>
-					<ListItemText primary="Todo" />
+					<ListItemText primary="Issues" />
 				</ListItem>
 			</List>
 		</div>
@@ -85,8 +85,7 @@ function App() {
 								color="inherit"
 								noWrap={isMobile}
 							>
-								Create-React-App with Material-UI, Typescript,
-								Redux and Routing
+								Avantica test
 							</Typography>
 						</Toolbar>
 					</AppBar>
