@@ -1,17 +1,18 @@
 import * as React from 'react';
 
 // Modules
+import { makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import Grid from '@material-ui/core/Grid';
-import { Theme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/styles';
 import map from 'lodash/map';
-import { useSelector } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 // Components
 import { Filters, TodoTable } from '../../components';
@@ -24,11 +25,10 @@ export default function Asynchronous() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const issues = useSelector((state: RootState) => state.issues.issuesList);
-  console.log('29 issuesList', issues);
+  const { issuesList, filters } = useSelector((state: RootState) => state.issues);
   const issuesActions = useActions(IssuesActions);
 
-  const loading = open && issues.length === 0;
+  const loading = open && issuesList.length === 0;
 
   React.useEffect(() => {
     let active = true;
@@ -36,8 +36,8 @@ export default function Asynchronous() {
     if (!loading) {
       return undefined;
     }
-    // Get issues
-    issuesActions.get_issues('facebook', 'react', ['OPEN']);
+    // Get issues according with filters
+    issuesActions.get_issues(filters.owner, filters.name, filters.status);
 
     return () => {
       active = false;
@@ -62,20 +62,24 @@ export default function Asynchronous() {
       onClose={() => {
         setOpen(false);
       }}
-      onInputChange={() => {
-        console.log('onInputChange');
+      onChange={(e) => {
+        console.log('onChange', e.target);
+        console.log('onChange', e.currentTarget);
       }}
-      onChange={() => {
-        console.log('onChange');
+      getOptionSelected={(option, value) => {
+        console.log('70 option', option);
+        console.log('71 value', value);
+        return option.databaseId === value.databaseId;
       }}
-      getOptionSelected={(option, value) => option.databaseId === value.databaseId}
       getOptionLabel={(option) => option.title}
-      options={issues}
+      options={issuesList}
       loading={loading}
-      getLimitTagsText={(more) => <span>+{more}</span>}
       renderOption={(option) => (
-        <React.Fragment>
-          <span><HighlightOffIcon style={{ color: 'red' }} /></span>
+        <React.Fragment key={option.databaseId}>
+          <span>
+            {option.state === 'OPEN' && <ErrorOutlineIcon style={{ color: '#28a745' }} />}
+            {option.state === 'CLOSED' && <HighlightOffIcon style={{ color: '#cb2431' }} />}
+          </span>
           {option.title}
           <span>
             {map(option.labels, (label, index) => {
@@ -117,31 +121,23 @@ export function IssuesPage() {
       <Grid container>
         <Filters />
       </Grid>
-      <Grid container>
+      <Grid container justify={'center'}>
         <Grid item xs={8}>
           <Asynchronous />
         </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant='h4' gutterBottom>
-            Issues List
-				  </Typography>
-          <TodoTable />
+        <Grid item xs={4}>
+          <div className={classes.buttonContainer}>
+            <Button
+              className={classes.button}
+              variant='contained'
+              color='secondary'
+              onClick={() => { console.log('aaa') }}
+            >
+              Open Issue
+					    </Button>
+          </div>
         </Grid>
       </Grid>
-      {/* <Grid item xs={6}>
-        <div className={classes.buttonContainer}>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="secondary"
-            onClick={handleAddTodo}
-          >
-            Add Todo
-					</Button>
-        </div>
-      </Grid> */}
     </Grid>
   );
 }

@@ -4,14 +4,9 @@ interface IIssueReducerType {
 }
 
 interface IFilters {
-  owner?: string;
-  name?: string;
-  status?: string;
-}
-
-enum IssuesActions {
-  SET_ISSUES = 'SET_ISSUES',
-  SET_FILTERS = 'SET_FILTERS',
+  owner: string;
+  name: string;
+  status: string[];
 }
 
 interface IssueActionType<T, P> {
@@ -30,6 +25,8 @@ interface ILabels {
 
 interface IIssueResult {
   databaseId: number;
+  state: string;
+  description: string;
   url: string;
   title: string;
   labels: {
@@ -39,6 +36,8 @@ interface IIssueResult {
 
 interface IIssue {
   databaseId: number;
+  state: string;
+  description: string;
   url: string;
   title: string;
   labels: ILabels[];
@@ -46,6 +45,7 @@ interface IIssue {
 
 interface IGithubResultType {
   repository: {
+    databaseId
     issues: {
       edges: [{ node: IIssueResult }]
     }

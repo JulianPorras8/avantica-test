@@ -1,11 +1,12 @@
+import { IssuesActions } from '../actions/issue';
 import createReducer from './createReducer';
 
 const initialState: IIssueReducerType = {
   issuesList: [],
   filters: {
-    owner: '',
-    name: '',
-    status: '',
+    owner: 'facebook',
+    name: 'react',
+    status: ['OPEN'],
   },
 };
 

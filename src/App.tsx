@@ -9,7 +9,6 @@ import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/styles';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 import { Route, Router } from 'react-router-dom';
 
 import { history } from './configureStore';

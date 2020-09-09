@@ -8,7 +8,10 @@ import Select from '@material-ui/core/Select';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 import map from 'lodash/map';
+import filter from 'lodash/filter';
+import { useSelector } from 'react-redux';
 
+// Redux
 import { useActions } from '../actions';
 import * as IssueActions from '../actions/issue';
 
@@ -22,9 +25,11 @@ const ISSUES_STATUS = ['OPEN', 'CLOSED'];
 
 export function Filters() {
   const classes = useStyles();
-  const [owner, setOwner] = React.useState(OWNERS[0]);
-  const [repository, setRepository] = React.useState(OWNERS[0].repositories[0]);
+
+  const filters = useSelector((state: RootState) => state.issues.filters);
   const issueActions = useActions(IssueActions);
+
+  const repositories = filter(OWNERS, (item) => item.value === filters.owner)[0].repositories;
 
   return (
     <>
@@ -33,10 +38,12 @@ export function Filters() {
         <Select
           labelId='owners-label'
           id='owners'
-          value={owner.value}
+          value={filters.owner}
           onChange={(e) => {
-            console.log('onChange owners', e.target.value);
-            // issueActions.()
+            issueActions.set_filters({
+              ...filters,
+              owner: e.target.value,
+            });
           }}
           label='Owner'
         >
@@ -52,13 +59,16 @@ export function Filters() {
         <Select
           labelId='repositories-label'
           id='repositories'
-          value={repository}
+          value={filters.name}
           onChange={(e) => {
-            console.log('onChange repositories', e.target.value);
+            issueActions.set_filters({
+              ...filters,
+              name: e.target.value,
+            });
           }}
           label='Repository'
         >
-          {map(owner.repositories, (repo, index) => {
+          {map(repositories, (repo, index) => {
             return (
               <MenuItem key={index} value={repo}>{repo}</MenuItem>
             );
@@ -70,15 +80,17 @@ export function Filters() {
         <Select
           labelId='issues-status-label'
           id='issues-status'
-          value={'ALL'}
+          value={filters.status && filters.status.length > 1 ? 'ALL' : filters.status[0]}
           onChange={(e) => {
-            console.log('onChange status', e.target.value);
+            const statusValue = e.target.value === 'ALL' ? ISSUES_STATUS : [e.target.value];
+            issueActions.set_filters({
+              ...filters,
+              status: statusValue,
+            });
           }}
           label='Issues status'
         >
-          <MenuItem value={'ALL'}>
-            <em>ALL</em>
-          </MenuItem>
+          <MenuItem value={'ALL'}>ALL</MenuItem>
           {map(ISSUES_STATUS, (status, index) => {
             return (<MenuItem key={index} value={status}>{status}</MenuItem>);
           })}

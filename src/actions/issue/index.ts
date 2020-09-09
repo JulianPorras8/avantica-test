@@ -3,7 +3,14 @@ import map from 'lodash/map';
 
 import { queryGetFacebookIssues } from './queries';
 
-// Private functions
+export enum IssuesActions {
+  SET_ISSUES = 'SET_ISSUES',
+  SET_FILTERS = 'SET_FILTERS',
+}
+/**
+ * The Github response is very complex, this function reduce the complexity to manipulate easier.
+ * @param result
+ */
 const mapGithubResult = (result: IGithubResultType): IIssue[] => {
   return map(result.repository.issues.edges, (item) => {
     const issue = item.node;
@@ -23,10 +30,10 @@ export function set_issues(issues: IIssue[]): IssueAction {
 
 export function get_issues(owner: string, repository: string, states: string[]) {
   // tslint:disable-next-line: ban-types
-  return async (dispatch: Function, getState: Function) => {
+  return async (dispatch: Function) => {
     const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {
       headers: {
-        'Authorization': 'Bearer c5bf246a57270722b1b19454bb70758bedca3bf8',
+        'Authorization': 'Bearer 96c2c42b2dd81915d74f54526a0a8d397d4d1efe',
         'Content-Type': 'application/json',
       },
     });
@@ -37,8 +44,7 @@ export function get_issues(owner: string, repository: string, states: string[]) 
       name: repository,
     });
     const mapedResult = mapGithubResult(result);
-    // console.log('41 mapedResult', mapedResult);
-    // return;
+
     return dispatch({ type: IssuesActions.SET_ISSUES, payload: mapedResult });
   };
 }
