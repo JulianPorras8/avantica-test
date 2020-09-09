@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-  AppBar, Badge, Divider, Drawer as DrawerMui, Hidden, IconButton, List, ListItem,
+  AppBar, Divider, Drawer as DrawerMui, Hidden, IconButton, List, ListItem,
   ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery
 } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
@@ -13,9 +13,7 @@ import { useSelector } from 'react-redux';
 import { Route, Router } from 'react-router-dom';
 
 import { history } from './configureStore';
-import { Todo } from './model';
 import { HomePage, IssuesPage } from './pages';
-import { RootState } from './reducers/index';
 import { withRoot } from './withRoot';
 
 function Routes() {
@@ -30,7 +28,7 @@ function Routes() {
   );
 }
 
-function Drawer(props: { todoList: Todo[] }) {
+function Drawer() {
   const classes = useStyles();
 
   return (
@@ -49,7 +47,7 @@ function Drawer(props: { todoList: Todo[] }) {
       <List>
         <ListItem button onClick={() => history.push('/issues')}>
           <ListItemIcon>
-            <TodoIcon todoList={props.todoList} />
+            <FormatListNumberedIcon />
           </ListItemIcon>
           <ListItemText primary='Issues' />
         </ListItem>
@@ -61,7 +59,7 @@ function Drawer(props: { todoList: Todo[] }) {
 function App() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(true);
-  const todoList = useSelector((state: RootState) => state.todoList);
+  // const todoList = useSelector((state: RootState) => state.todoList);
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('sm')
   );
@@ -89,7 +87,7 @@ function App() {
                 color='inherit'
                 noWrap={isMobile}
               >
-                Avantica test
+                Avantica - Github Issues
 							</Typography>
             </Toolbar>
           </AppBar>
@@ -106,7 +104,7 @@ function App() {
                 keepMounted: true, // Better open performance on mobile.
               }}
             >
-              <Drawer todoList={todoList} />
+              <Drawer />
             </DrawerMui>
           </Hidden>
           <Hidden smDown>
@@ -117,7 +115,7 @@ function App() {
                 paper: classes.drawerPaper,
               }}
             >
-              <Drawer todoList={todoList} />
+              <Drawer />
             </DrawerMui>
           </Hidden>
           <Routes />
@@ -125,20 +123,6 @@ function App() {
       </div>
     </Router>
   );
-}
-
-function TodoIcon(props: { todoList: Todo[] }) {
-  const uncompletedTodos = props.todoList.filter(t => t.completed === false);
-
-  if (uncompletedTodos.length > 0) {
-    return (
-      <Badge color='secondary' badgeContent={uncompletedTodos.length}>
-        <FormatListNumberedIcon />
-      </Badge>
-    );
-  } else {
-    return <FormatListNumberedIcon />;
-  }
 }
 
 const drawerWidth = 240;

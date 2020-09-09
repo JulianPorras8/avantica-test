@@ -7,48 +7,81 @@ import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import Select from '@material-ui/core/Select';
 import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
+import map from 'lodash/map';
+
+import { useActions } from '../actions';
+import * as IssueActions from '../actions/issue';
+
+const OWNERS = [{
+  owner: 'Facebook',
+  value: 'facebook',
+  repositories: ['react', 'react-native'],
+}];
+
+const ISSUES_STATUS = ['OPEN', 'CLOSED'];
 
 export function Filters() {
   const classes = useStyles();
+  const [owner, setOwner] = React.useState(OWNERS[0]);
+  const [repository, setRepository] = React.useState(OWNERS[0].repositories[0]);
+  const issueActions = useActions(IssueActions);
 
   return (
     <>
       <FormControl variant='outlined' className={classes.formControl}>
-        <InputLabel id='demo-simple-select-outlined-label'>Age</InputLabel>
+        <InputLabel id='owners-label'>Owner</InputLabel>
         <Select
-          labelId='demo-simple-select-outlined-label'
-          id='demo-simple-select-outlined'
-          value={'age'}
-          onChange={() => {
-            console.log('onChange');
+          labelId='owners-label'
+          id='owners'
+          value={owner.value}
+          onChange={(e) => {
+            console.log('onChange owners', e.target.value);
+            // issueActions.()
           }}
-          label='Age'
+          label='Owner'
         >
-          <MenuItem value=''>
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {map(OWNERS, (ownerItem, index) => {
+            return (
+              <MenuItem key={index} value={ownerItem.value}>{ownerItem.owner}</MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
       <FormControl variant='outlined' className={classes.formControl}>
-        <InputLabel id='demo-simple-select-outlined-label'>Age</InputLabel>
+        <InputLabel id='repositories-label'>Repository</InputLabel>
         <Select
-          labelId='demo-simple-select-outlined-label'
-          id='demo-simple-select-outlined'
-          value={'age2'}
-          onChange={() => {
-            console.log('onChange');
+          labelId='repositories-label'
+          id='repositories'
+          value={repository}
+          onChange={(e) => {
+            console.log('onChange repositories', e.target.value);
           }}
-          label='Age'
+          label='Repository'
         >
-          <MenuItem value=''>
-            <em>None</em>
+          {map(owner.repositories, (repo, index) => {
+            return (
+              <MenuItem key={index} value={repo}>{repo}</MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+      <FormControl variant='outlined' className={classes.formControl}>
+        <InputLabel id='issues-status-label'>Issues state</InputLabel>
+        <Select
+          labelId='issues-status-label'
+          id='issues-status'
+          value={'ALL'}
+          onChange={(e) => {
+            console.log('onChange status', e.target.value);
+          }}
+          label='Issues status'
+        >
+          <MenuItem value={'ALL'}>
+            <em>ALL</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {map(ISSUES_STATUS, (status, index) => {
+            return (<MenuItem key={index} value={status}>{status}</MenuItem>);
+          })}
         </Select>
       </FormControl>
     </>

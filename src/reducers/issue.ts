@@ -1,24 +1,25 @@
-import { TodoAction, TodoActions, Todo } from '../model';
 import createReducer from './createReducer';
 
-export const todoList = createReducer<Todo[]>([], {
-  [TodoActions.ADD_TODO](state: Todo[], action: TodoAction) {
-    return [...state, action.payload];
+const initialState: IIssueReducerType = {
+  issuesList: [],
+  filters: {
+    owner: '',
+    name: '',
+    status: '',
   },
-  [TodoActions.COMPLETE_TODO](state: Todo[], action: TodoAction) {
-    // search after todo item with the given id and set completed to true
-    return state.map(t =>
-      t.id === action.payload ? { ...t, completed: true } : t
-    );
+};
+
+export const issues = createReducer<IIssueReducerType>(initialState, {
+  [IssuesActions.SET_ISSUES](state: IIssueReducerType, action: IssueAction) {
+    return {
+      ...state,
+      issuesList: action.payload,
+    };
   },
-  [TodoActions.UNCOMPLETE_TODO](state: Todo[], action: TodoAction) {
-    // search after todo item with the given id and set completed to false
-    return state.map(t =>
-      t.id === action.payload ? { ...t, completed: false } : t
-    );
-  },
-  [TodoActions.DELETE_TODO](state: Todo[], action: TodoAction) {
-    // remove all todos with the given id
-    return state.filter(t => t.id !== action.payload);
+  [IssuesActions.SET_FILTERS](state: IIssueReducerType, action: IssueAction) {
+    return {
+      ...state,
+      filters: action.payload,
+    };
   },
 });

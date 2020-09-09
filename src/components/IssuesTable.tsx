@@ -1,66 +1,63 @@
+import * as React from 'react';
+
 // prettier-ignore
-import { Checkbox, IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import {  IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/styles';
-import * as React from 'react';
 import { useSelector } from 'react-redux';
+
 import { useActions } from '../actions';
 import * as TodoActions from '../actions/issue';
-import { Todo } from '../model';
-import { RootState } from '../reducers';
 
 export function TodoTable() {
-  const classes = useStyles();
-  const todoList = useSelector((state: RootState) => state.todoList);
-  const todoActions = useActions(TodoActions);
-
-  const onRowClick = (todo: Todo) => {
-    if (todo.completed) {
-      todoActions.uncompleteTodo(todo.id);
-    } else {
-      todoActions.completeTodo(todo.id);
-    }
-  };
+  // const classes = useStyles();
+  // const issuesList = useSelector((state: RootState) => state.issues);
+  // const todoActions = useActions(TodoActions);
+  // console.log('16 issuesList', issuesList);
+  // const onRowClick = (todo: IIssue) => {
+  //   // TODO: define what to do here
+  // };
 
   return (
-    <Paper className={classes.paper}>
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell padding='default'>Completed</TableCell>
-            <TableCell padding='default'>Text</TableCell>
-            <TableCell padding='default'>Delete</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {todoList.map((n: Todo) => {
-            return (
-              <TableRow
-                key={n.id}
-                hover
-                onClick={(event) => onRowClick(n)}
-              >
-                <TableCell padding='none'>
-                  <Checkbox checked={n.completed} />
-                </TableCell>
-                <TableCell padding='none'>{n.text}</TableCell>
-                <TableCell padding='none'>
-                  <IconButton
-                    aria-label='Delete'
-                    color='default'
-                    onClick={() =>
-                      todoActions.deleteTodo(n.id)
-                    }
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </Paper>
+    <div></div>
+    // <Paper className={classes.paper}>
+    //   <Table className={classes.table}>
+    //     <TableHead>
+    //       <TableRow>
+    //         <TableCell padding='default'>Status</TableCell>
+    //         <TableCell padding='default'>Text</TableCell>
+    //         <TableCell padding='default'>Delete</TableCell>
+    //       </TableRow>
+    //     </TableHead>
+    //     <TableBody>
+    //       {issuesList.map((n: IIssue) => {
+    //         return (
+    //           <TableRow
+    //             key={n.databaseId}
+    //             hover
+    //             onClick={(event) => onRowClick(n)}
+    //           >
+    //             <TableCell padding='none'>
+
+    //             </TableCell>
+    //             <TableCell padding='none'>{n.title}</TableCell>
+    //             <TableCell padding='none'>
+    //               <IconButton
+    //                 aria-label='Delete'
+    //                 color='default'
+    //                 onClick={() =>
+    //                   todoActions.deleteTodo(n.databaseId)
+    //                 }
+    //               >
+    //                 <DeleteIcon />
+    //               </IconButton>
+    //             </TableCell>
+    //           </TableRow>
+    //         );
+    //       })}
+    //     </TableBody>
+    //   </Table>
+    // </Paper>
   );
 }
 

@@ -11,17 +11,23 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { makeStyles } from '@material-ui/styles';
 import map from 'lodash/map';
+import { useSelector } from 'react-redux';
 
 // Components
 import { Filters, TodoTable } from '../../components';
 
-// Controllers
-import { getFacebookIssues } from './issuesHandler';
+// Redux
+import { useActions } from '../../actions';
+import * as  IssuesActions from '../../actions/issue';
 
 export default function Asynchronous() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [issues, setIssues] = React.useState<IIssue[]>([]);
+
+  const issues = useSelector((state: RootState) => state.issues.issuesList);
+  console.log('29 issuesList', issues);
+  const issuesActions = useActions(IssuesActions);
+
   const loading = open && issues.length === 0;
 
   React.useEffect(() => {
@@ -30,17 +36,8 @@ export default function Asynchronous() {
     if (!loading) {
       return undefined;
     }
-
-    (async () => {
-      try {
-        const result = await getFacebookIssues();
-        if (active) {
-          setIssues(result);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    // Get issues
+    issuesActions.get_issues('facebook', 'react', ['OPEN']);
 
     return () => {
       active = false;
@@ -49,7 +46,7 @@ export default function Asynchronous() {
 
   React.useEffect(() => {
     if (!open) {
-      setIssues([]);
+      issuesActions.set_issues([]);
     }
   }, [open]);
 
@@ -121,7 +118,7 @@ export function IssuesPage() {
         <Filters />
       </Grid>
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item xs={8}>
           <Asynchronous />
         </Grid>
       </Grid>
