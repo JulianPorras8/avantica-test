@@ -87,7 +87,7 @@ function App() {
                 noWrap={isMobile}
               >
                 Avantica - Github Issues
-							</Typography>
+              </Typography>
             </Toolbar>
           </AppBar>
           <Hidden mdUp>

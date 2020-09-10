@@ -1,23 +1,18 @@
 import * as React from 'react';
 
-import { Button, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
-import { useSelector } from 'react-redux';
 import { HomeBox } from '../components';
 
 export function HomePage() {
   const classes = useStyles();
   const [boxColor, setBoxColor] = React.useState('red');
-  // const todoList = useSelector((state: RootState) => state.todoList);
 
   const onButtonClick = () =>
     setBoxColor(boxColor === 'red' ? 'blue' : 'red');
 
   return (
     <div className={classes.root}>
-      {/* <Typography variant='h4' gutterBottom>
-        You have {todoList.length} TODOs in your list!
-			</Typography> */}
       <div className={classes.centerContainer}>
         <HomeBox size={300} color={boxColor} />
         <Button
@@ -27,7 +22,7 @@ export function HomePage() {
           color='primary'
         >
           Change Color
-				</Button>
+        </Button>
       </div>
     </div>
   );

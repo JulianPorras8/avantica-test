@@ -9,6 +9,7 @@
 		"@types/lodash": "^4.14.161",
 		"graphql": "^15.3.0",
 		"graphql-request": "^3.1.0",
+		"html-react-parser": "^0.13.0",
 		"localforage": "1.7.3",
 		"lodash": "4.17.20",
 		"react": "16.12.0",

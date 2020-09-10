@@ -1,7 +1,11 @@
 import { GraphQLClient } from 'graphql-request';
 import map from 'lodash/map';
 
+// Queires
 import { queryGetFacebookIssues } from './queries';
+
+// Config
+import config from '../../config';
 
 export enum IssuesActions {
   SET_ISSUES = 'SET_ISSUES',
@@ -31,9 +35,9 @@ export function set_issues(issues: IIssue[]): IssueAction {
 export function get_issues(owner: string, repository: string, states: string[]) {
   // tslint:disable-next-line: ban-types
   return async (dispatch: Function) => {
-    const graphQLClient = new GraphQLClient('https://api.github.com/graphql', {
+    const graphQLClient = new GraphQLClient(config.API_GITHUB_GRAPHQL, {
       headers: {
-        'Authorization': 'Bearer 96c2c42b2dd81915d74f54526a0a8d397d4d1efe',
+        'Authorization': `Bearer ${config.PERSONAL_ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
       },
     });

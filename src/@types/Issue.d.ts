@@ -24,22 +24,44 @@ interface ILabels {
 }
 
 interface IIssueResult {
+  author: {
+    avatarUrl: string;
+    login: string;
+    url: string;
+  };
+  body: string;
+  bodyHTML: string;
+  closedAt: string;
+  createdAt: string;
   databaseId: number;
-  state: string;
   description: string;
-  url: string;
+  number: string;
+  state: string;
   title: string;
+  url: string;
+  updatedAt: string;
   labels: {
     edges: [{ node: ILabels }]
   };
 }
 
 interface IIssue {
+  author: {
+    avatarUrl: string;
+    login: string;
+    url: string;
+  };
+  body: string;
+  bodyHTML: string;
+  closedAt: string;
+  createdAt: string;
   databaseId: number;
-  state: string;
   description: string;
-  url: string;
+  number: string;
+  state: string;
   title: string;
+  url: string;
+  updatedAt: string;
   labels: ILabels[];
 }
 
