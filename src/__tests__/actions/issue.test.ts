@@ -5,7 +5,7 @@ import thunk, { ThunkDispatch } from 'redux-thunk';
 import nock from 'nock';
 
 // Actions
-import { set_issues, set_filters, get_issues, mapGithubResult, IssuesActions } from '../../actions/issue';
+import { set_issues, set_filters, get_issues, mapGithubResult, IssuesActions, set_error } from '../../actions/issue';
 
 // Data for testing
 import data from './data';
@@ -16,7 +16,7 @@ type DispatchExts = ThunkDispatch<any, void, AnyAction>;
 const middlewares = [thunk];
 const mockStore = configureMockStore<any, DispatchExts>(middlewares);
 
-describe('actions', () => {
+describe('Actions', () => {
 
   afterEach(() => {
     nock.enableNetConnect();
@@ -68,6 +68,15 @@ describe('actions', () => {
       payload: filters,
     };
     expect(set_filters(filters)).toEqual(expectedAction);
+  });
+
+  it('`set_error` should return the expected action payload value', () => {
+    const newPayload = { open: true, message: 'Bad credentials' };
+    const expectedAction = {
+      type: IssuesActions.SET_ERROR,
+      payload: newPayload,
+    };
+    expect(set_error(newPayload)).toEqual(expectedAction);
   });
 
   it('`get_issues` get issues from facebook', () => {

@@ -1,6 +1,12 @@
 interface IIssueReducerType {
   issuesList: IIssue[];
   filters: IFilters;
+  error: IError;
+}
+
+interface IError {
+  open: boolean;
+  message: string;
 }
 
 interface IFilters {
@@ -17,6 +23,7 @@ interface IssueActionType<T, P> {
 type IssueAction =
   | IssueActionType<typeof IssuesActions.SET_ISSUES, IIssue[]>
   | IssueActionType<typeof IssuesActions.SET_FILTERS, IFilters>
+  | IssueActionType<typeof IssuesActions.SET_ERROR, IError>
   ;
 
 interface ILabels {

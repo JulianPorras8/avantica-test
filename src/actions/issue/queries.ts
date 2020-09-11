@@ -1,7 +1,7 @@
 export const queryGetFacebookIssues = `query GetIssues($owner: String!, $name: String!, $states: [IssueState!]) {
   repository(owner: $owner, name: $name) {
     databaseId
-    issues(first: 5, states: $states, orderBy: { direction: DESC, field: CREATED_AT }) {
+    issues(first: 120, states: $states, orderBy: { direction: DESC, field: CREATED_AT }) {
       edges {
         node {
           author {

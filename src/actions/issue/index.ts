@@ -1,3 +1,4 @@
+// Modules
 import { GraphQLClient } from 'graphql-request';
 import map from 'lodash/map';
 
@@ -10,6 +11,7 @@ import config from '../../config';
 export enum IssuesActions {
   SET_ISSUES = 'SET_ISSUES',
   SET_FILTERS = 'SET_FILTERS',
+  SET_ERROR = 'SET_ERROR',
 }
 /**
  * The Github response is very complex, this function reduce the complexity to manipulate easier.
@@ -50,7 +52,7 @@ export const get_issues = (owner: string, repository: string, states: string[]) 
       const mapedResult = mapGithubResult(result);
       return dispatch({ type: IssuesActions.SET_ISSUES, payload: mapedResult });
     } catch (error) {
-      return dispatch({ type: IssuesActions.SET_ISSUES, payload: [] });
+      return dispatch({ type: IssuesActions.SET_ERROR, payload: { open: true, message: error.response.message } });
     }
   };
 }
@@ -59,5 +61,12 @@ export function set_filters(filters: IFilters): IssueAction {
   return {
     type: IssuesActions.SET_FILTERS,
     payload: filters,
+  };
+}
+
+export function set_error(error: IError): IssueAction {
+  return {
+    type: IssuesActions.SET_ERROR,
+    payload: error,
   };
 }

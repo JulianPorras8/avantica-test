@@ -1,21 +1,24 @@
 import * as React from 'react';
 
-// Modules
+// Material Components
+import { makeStyles } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem/MenuItem';
 import Select from '@material-ui/core/Select';
-import { Theme } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/styles';
-import Grid from '@material-ui/core/Grid';
+
+// Modules
+import { useSelector } from 'react-redux';
 import map from 'lodash/map';
 import filter from 'lodash/filter';
-import { useSelector } from 'react-redux';
 
-// Redux
+// Actions
 import { useActions } from '../actions';
 import * as IssueActions from '../actions/issue';
 
+// You can add more objects like this to the array
 const OWNERS = [{
   owner: 'Facebook',
   value: 'facebook',

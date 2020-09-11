@@ -1,24 +1,24 @@
 import * as React from 'react';
 
-// Styles
+// Components
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
-
-// Components
+import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import parse from 'html-react-parser';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import Grid from '@material-ui/core/Grid';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import map from 'lodash/map';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+
+// Modules
+import parse from 'html-react-parser';
+import map from 'lodash/map';
 
 interface Props {
   issue: IIssue | null;

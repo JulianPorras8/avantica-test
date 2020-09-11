@@ -1,15 +1,19 @@
-// prettier-ignore
+import * as React from 'react';
+
+// Material Components
 import {
   AppBar, Divider, Drawer as DrawerMui, Hidden, IconButton, List, ListItem,
   ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/styles';
-import * as React from 'react';
+
+// Modules
 import { Route, Router } from 'react-router-dom';
 
+// Config
 import { history } from './configureStore';
 import { IssuesPage } from './pages';
 import { withRoot } from './withRoot';
@@ -47,7 +51,6 @@ function Drawer() {
 function App() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(true);
-  // const todoList = useSelector((state: RootState) => state.todoList);
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('sm')
   );

@@ -8,6 +8,10 @@ const initialState: IIssueReducerType = {
     name: 'react',
     status: ['OPEN'],
   },
+  error: {
+    open: false,
+    message: '',
+  },
 };
 
 export const issues = createReducer<IIssueReducerType>(initialState, {
@@ -21,6 +25,12 @@ export const issues = createReducer<IIssueReducerType>(initialState, {
     return {
       ...state,
       filters: action.payload,
+    };
+  },
+  [IssuesActions.SET_ERROR](state: IIssueReducerType, action: IssueAction) {
+    return {
+      ...state,
+      error: action.payload,
     };
   },
 });
