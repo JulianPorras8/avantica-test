@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
 // Components
-import { Filters, IssueDialog, SearchInput } from '../../components';
+import { Filters, IssueDialog, SearchInput } from '../components';
 
 export function IssuesPage() {
   const classes = useStyles();

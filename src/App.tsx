@@ -5,14 +5,13 @@ import {
 } from '@material-ui/core';
 import { Theme } from '@material-ui/core/styles';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/styles';
 import * as React from 'react';
 import { Route, Router } from 'react-router-dom';
 
 import { history } from './configureStore';
-import { HomePage, IssuesPage } from './pages';
+import { IssuesPage } from './pages';
 import { withRoot } from './withRoot';
 
 function Routes() {
@@ -20,8 +19,7 @@ function Routes() {
 
   return (
     <div className={classes.content}>
-      <Route exact={true} path='/' component={HomePage} />
-      <Route exact={true} path='/home' component={HomePage} />
+      <Route exact={true} path='/' component={IssuesPage} />
       <Route exact={true} path='/issues' component={IssuesPage} />
     </div>
   );
@@ -33,15 +31,6 @@ function Drawer() {
   return (
     <div>
       <div className={classes.drawerHeader} />
-      <Divider />
-      <List>
-        <ListItem button onClick={() => history.push('/')}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary='Home' />
-        </ListItem>
-      </List>
       <Divider />
       <List>
         <ListItem button onClick={() => history.push('/issues')}>

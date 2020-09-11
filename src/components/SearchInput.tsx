@@ -97,7 +97,7 @@ export function SearchInput(props: Props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label='React Issues'
+          label='Issue'
           variant='outlined'
           InputProps={{
             ...params.InputProps,

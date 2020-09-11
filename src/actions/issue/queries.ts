@@ -9,14 +9,12 @@ export const queryGetFacebookIssues = `query GetIssues($owner: String!, $name: S
             login
             url
           }
-          body
           bodyHTML
           updatedAt
           closedAt
           createdAt
           databaseId
           number
-          resourcePath
           state
           title
           url
