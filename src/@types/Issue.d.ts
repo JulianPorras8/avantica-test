@@ -1,6 +1,12 @@
 interface IIssueReducerType {
   issuesList: IIssue[];
   filters: IFilters;
+  error: IError;
+}
+
+interface IError {
+  open: boolean;
+  message: string;
 }
 
 interface IFilters {
@@ -17,10 +23,15 @@ interface IssueActionType<T, P> {
 type IssueAction =
   | IssueActionType<typeof IssuesActions.SET_ISSUES, IIssue[]>
   | IssueActionType<typeof IssuesActions.SET_FILTERS, IFilters>
-;
+  | IssueActionType<typeof IssuesActions.SET_ERROR, IError>
+  ;
 
 interface ILabels {
   name: string;
+}
+
+interface INodeLabelsResult {
+  node: ILabels;
 }
 
 interface IIssueResult {
@@ -29,19 +40,17 @@ interface IIssueResult {
     login: string;
     url: string;
   };
-  body: string;
   bodyHTML: string;
   closedAt: string;
   createdAt: string;
   databaseId: number;
-  description: string;
-  number: string;
+  number: number;
   state: string;
   title: string;
   url: string;
   updatedAt: string;
   labels: {
-    edges: [{ node: ILabels }]
+    edges: INodeLabelsResult[]
   };
 }
 
@@ -51,13 +60,11 @@ interface IIssue {
     login: string;
     url: string;
   };
-  body: string;
   bodyHTML: string;
   closedAt: string;
   createdAt: string;
   databaseId: number;
-  description: string;
-  number: string;
+  number: number;
   state: string;
   title: string;
   url: string;
@@ -65,11 +72,15 @@ interface IIssue {
   labels: ILabels[];
 }
 
+interface INodeIssuesResult {
+  node: IIssueResult;
+}
+
 interface IGithubResultType {
   repository: {
-    databaseId
+    databaseId: number;
     issues: {
-      edges: [{ node: IIssueResult }]
+      edges: INodeIssuesResult[]
     }
   };
 }

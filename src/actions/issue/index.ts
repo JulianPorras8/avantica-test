@@ -1,3 +1,4 @@
+// Modules
 import { GraphQLClient } from 'graphql-request';
 import map from 'lodash/map';
 
@@ -10,12 +11,13 @@ import config from '../../config';
 export enum IssuesActions {
   SET_ISSUES = 'SET_ISSUES',
   SET_FILTERS = 'SET_FILTERS',
+  SET_ERROR = 'SET_ERROR',
 }
 /**
  * The Github response is very complex, this function reduce the complexity to manipulate easier.
  * @param result
  */
-const mapGithubResult = (result: IGithubResultType): IIssue[] => {
+export const mapGithubResult = (result: IGithubResultType): IIssue[] => {
   return map(result.repository.issues.edges, (item) => {
     const issue = item.node;
     return {
@@ -32,7 +34,7 @@ export function set_issues(issues: IIssue[]): IssueAction {
   };
 }
 
-export function get_issues(owner: string, repository: string, states: string[]) {
+export const get_issues = (owner: string, repository: string, states: string[]) => {
   // tslint:disable-next-line: ban-types
   return async (dispatch: Function) => {
     const graphQLClient = new GraphQLClient(config.API_GITHUB_GRAPHQL, {
@@ -41,15 +43,17 @@ export function get_issues(owner: string, repository: string, states: string[]) 
         'Content-Type': 'application/json',
       },
     });
-
-    const result: IGithubResultType = await graphQLClient.request(queryGetFacebookIssues, {
-      owner,
-      states,
-      name: repository,
-    });
-    const mapedResult = mapGithubResult(result);
-
-    return dispatch({ type: IssuesActions.SET_ISSUES, payload: mapedResult });
+    try {
+      const result: IGithubResultType = await graphQLClient.request(queryGetFacebookIssues, {
+        owner,
+        states,
+        name: repository,
+      });
+      const mapedResult = mapGithubResult(result);
+      return dispatch({ type: IssuesActions.SET_ISSUES, payload: mapedResult });
+    } catch (error) {
+      return dispatch({ type: IssuesActions.SET_ERROR, payload: { open: true, message: error.response.message } });
+    }
   };
 }
 
@@ -57,5 +61,12 @@ export function set_filters(filters: IFilters): IssueAction {
   return {
     type: IssuesActions.SET_FILTERS,
     payload: filters,
+  };
+}
+
+export function set_error(error: IError): IssueAction {
+  return {
+    type: IssuesActions.SET_ERROR,
+    payload: error,
   };
 }

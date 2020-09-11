@@ -1,16 +1,20 @@
 import * as React from 'react';
 
-import { useSelector } from 'react-redux';
+// Material Components
 import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import map from 'lodash/map';
-import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import TextField from '@material-ui/core/TextField';
 
+// Modules
+import { useSelector } from 'react-redux';
+import map from 'lodash/map';
+
+// Actions
 import { useActions } from '../actions';
 import * as  IssuesActions from '../actions/issue';
 
@@ -35,7 +39,7 @@ export function SearchInput(props: Props) {
     if (!loading) {
       return undefined;
     }
-    // Get issues according with filters
+    // Get issues according with filters selected on Filters Component
     issuesActions.get_issues(filters.owner, filters.name, filters.status);
 
     return () => {
@@ -97,7 +101,7 @@ export function SearchInput(props: Props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label='React Issues'
+          label='Issue'
           variant='outlined'
           InputProps={{
             ...params.InputProps,
@@ -117,9 +121,6 @@ export function SearchInput(props: Props) {
 const useStyles = makeStyles((theme: Theme) => ({
   buttonContainer: {
     margin: theme.spacing(2),
-  },
-  button: {
-    // marginBottom: 15,
   },
   chip: {
     margin: theme.spacing(0.5),

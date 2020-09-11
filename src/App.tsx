@@ -1,18 +1,21 @@
-// prettier-ignore
+import * as React from 'react';
+
+// Material Components
 import {
   AppBar, Divider, Drawer as DrawerMui, Hidden, IconButton, List, ListItem,
   ListItemIcon, ListItemText, Toolbar, Typography, useMediaQuery
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
-import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from '@material-ui/icons/Menu';
-import { makeStyles } from '@material-ui/styles';
-import * as React from 'react';
+
+// Modules
 import { Route, Router } from 'react-router-dom';
 
+// Config
 import { history } from './configureStore';
-import { HomePage, IssuesPage } from './pages';
+import { IssuesPage } from './pages';
 import { withRoot } from './withRoot';
 
 function Routes() {
@@ -20,8 +23,7 @@ function Routes() {
 
   return (
     <div className={classes.content}>
-      <Route exact={true} path='/' component={HomePage} />
-      <Route exact={true} path='/home' component={HomePage} />
+      <Route exact={true} path='/' component={IssuesPage} />
       <Route exact={true} path='/issues' component={IssuesPage} />
     </div>
   );
@@ -33,15 +35,6 @@ function Drawer() {
   return (
     <div>
       <div className={classes.drawerHeader} />
-      <Divider />
-      <List>
-        <ListItem button onClick={() => history.push('/')}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary='Home' />
-        </ListItem>
-      </List>
       <Divider />
       <List>
         <ListItem button onClick={() => history.push('/issues')}>
@@ -58,7 +51,6 @@ function Drawer() {
 function App() {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(true);
-  // const todoList = useSelector((state: RootState) => state.todoList);
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('sm')
   );

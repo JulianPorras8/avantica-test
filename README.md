@@ -36,8 +36,13 @@ npm i
 npm start
 ```
 
+Test:
+```bash
+npm test
 ```
 
 ## Contributors
-
 -   [Julián Porras](https://github.com/JulianPorras8)
+
+## Warning
+To have access to Github GraphQL API you need to generate a `personal access token` according with this guide [Forming calls with GraphQL](https://docs.github.com/en/graphql/guides/forming-calls-with-graphql). Otherwise the calls will fail, the project have a testing token that may be already has expired, please generate a new one.
